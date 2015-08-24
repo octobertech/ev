@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load pages_tags mezzanine_tags i18n future staticfiles %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/mezzanine.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/drum.css">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ STATIC_URL }}mezzanine/js/{{ settings.JQUERY_FILENAME }}"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap2-extras.js"></script>
+<script src="{{ STATIC_URL }}js/drum.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.pjax.js"></script>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+	<ul class="nav navbar-nav" role="navigation">
+        {% url "link_list_latest" as link_list_latest %}
+        {% url "comment_list_latest" as comment_list_latest %}
+        {% url "comment_list_best" as comment_list_best %}
+        {% url "home" as home %}
+		<li{% if request.path == home %} class="active"{% endif %}><a href="{{ home }}">Main</a></li>
+        <li{% if request.path == link_list_latest %} class="active"{% endif %}><a href="{{ link_list_latest }}">Latest</a></li>
+		<li class="{% if request.path == comment_list_latest %}active{% endif %} dropdown"><a href="{{ comment_list_latest }}" 
+		class="dropdown-toggle disabled" data-toggle="dropdown">Comments <b class="caret"></b></a>
+		    <ul class="dropdown-menu" data-no-collapse="true">
+                <li{% if request.path == comment_list_best %} class="active"{% endif %}><a href="{{ comment_list_best }}">Best</a></li>
+		    </ul>
+		</li>
+		<li><a href="/gallery/brands/">Brands</a></li>
+		<li><a href="/gallery/instas/" title="Instagramers">Instas</a></li>
+    </ul>
+    
+    <ul class="nav navbar-nav navbar-right">
+	<li><form action="{% url "link_create" %}">
+	{% csrf_token %}
+	<button class="btn btn-default no-pjax" style="margin-top: 6px;">New Campaign</button></form></li>
+	
+    </ul>
+		
+</div>
+
+
+
+<div class="container main">
+{% nevercache %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" data-alert="alert">
+    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
+</div>
+{% endfor %}
+{% endnevercache %}
+<h1>{% block title %}{% endblock %}</h1>
+{% url "top" as top %}
+{% if request.path == top %}
+<h1>Campaigns <p style="font-size: 18px;"><a href="/about">Learn more</a></p></h1><br>
+{% search_form "main.Link" %}<br>
+<h2>Top</h2>
+{% endif %}
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+    {% block main %}{% endblock %}
+</div>
+ {% block right_panel %}
+<h3>Featured campaign</h3>
+<a href="/c/1"><img src="{{ STATIC_URL }}img/evangel_logo_big.png" class="img-thumbnail"/></a><br><br>
+<h4>Evangel is a top fashion brand...</h4><br>
+  {% endblock %}
+
+</div>
+</div>
+
+<footer>
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+{% search_form "main.Link" %}
+<br>
+</div>
+</div>
+</div>
+</footer>
+{% endblock %}

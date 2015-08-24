@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n future staticfiles %}
+
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% if settings.SITE_TITLE %}{{ settings.SITE_TITLE }}{% endif %} - {% block meta_title %}{% endblock %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/rtl.css" %}">
+{% endif %}
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
+{% block extra_css %}{% endblock %}
+<link href="{% static "css/business-frontpage.css" %}" rel="stylesheet">
+{% endcompress %}
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+{% compress js %}
+<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+<script src="{% static "js/bootstrap-extras.js" %}"></script>
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<script src="{% static "js/respond.min.js" %}"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+<style>
+    a {
+        color: black;
+    }
+    a:hover,
+    a:focus	{
+        color: #7864E8;
+    }
+    a.thumbnail:hover,
+    a.thumbnail:focus,
+    a.thumbnail.active {
+        border-color: #7864E8;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #ffffff;
+        background-color: #7864E8;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #ffffff;
+        background-color: #7864E8;
+    }
+	.navbar-brand {
+	    color: #333;
+        font-size: 25px;
+		text-transform: uppercase;
+    }
+    div.payment-errors {
+        color: #F00;
+    }
+    .navbar-static-top,
+    .navbar-fixed-top {
+        border-top: none;
+    }
+</style>
+</head>
+
+<body id="{% block body_id %}body{% endblock %}">
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="container">
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">{% trans "Toggle Navigation" %}</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    {% if settings.SITE_TITLE %}<a class="navbar-brand" style="font-size: 24px; color: #222; " href="/" ><img src="{% static "img/logo1.png" %}" width="15px" style="margin-right: 3px;" />{{ settings.SITE_TITLE }}</a>{% endif %}
+    {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+</div>
+<div class="navbar-collapse collapse">
+    {% page_menu "pages/menus/dropdown.html" %}
+    {% search_form %}
+</div>
+</div>
+</div>
+
+
+
+<div class="container">
+
+{% nevercache %}
+{% if messages %}
+<div class="messages">
+{% for message in messages %}
+<div class="alert alert-dismissable alert-{{ message.tags }}" data-alert="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{ message }}
+</div>
+{% endfor %}
+</div>
+{% endif %}
+{% endnevercache %}
+
+<h1>{% block title %}{% endblock %}</h1>
+
+
+</div>
+
+<div class="container-fluid">
+<div class="row">
+
+<div class="col-md-12 middle">
+    {% block main %}
+
+<header class="business-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="tagline">Brand and Product<br>Design, Innovation and Marketing <br>Powered by Cutting-Edge <br>Technology, Creativity <br>and Big Data Analytics</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+<br>
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>About</h2>
+                <p style="font-size: 17px;">Evangel Technologies {% trans "is a brand and product design, innovation and marketing company registered in Hong Kong that leverages cutting-edge technology, creativity and big data analytics, and works with new and established multinational companies and brands operating primarily in Technology, Fashion and Lifestyle industries and their convergence." %}</p>
+                <p>
+                    <a class="btn btn-default btn-sm" href="/about/">LEARN MORE</a>
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <h2>Blog</h2>
+                               
+                <address>
+                    <strong>Evangel Technologies LLP</strong>
+                    <br>Al-Farabi, 7
+                    <br>Almaty city
+                    <br>Republic of Kazakhstan
+                </address>
+                <address>
+                    <abbr title="Phone">P:</abbr>+7 (708) 7662746
+                    <br>
+                    <abbr title="Email">E:</abbr> <a href="mailto:info@evangel.co">info@evangel.co</a>
+                </address>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <div class="row text-center">
+            <h2>Services</h2>
+            <h3>Brand, Product and Technology:</h3><br><br>
+            <div class="col-sm-4">
+                <img class="img-circle img-responsive img-center" src="{% static "img/logo1.png" %}" alt="">
+                <h2>Design</h2>
+                <p>Evangel brings .</p>
+            </div>
+            <div class="col-sm-4">
+                <img class="img-circle img-responsive img-center" src="{% static "img/logo1.png" %}" alt="">
+                <h2>Innovation</h2>
+                <p>The images are set to be circular and responsive. </p>
+            </div>
+            <div class="col-sm-4">
+                <img class="img-circle img-responsive img-center" src="{% static "img/logo1.png" %}" alt="">
+                <h2>Marketing</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. </p>
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    {% endblock %}
+</div>
+
+
+</div>
+</div>
+
+<footer>
+<div class="container">
+{% page_menu "pages/menus/footer.html" %}
+
+<div class="row">
+
+<p class="site-info text-center" style="font-size: 15px; margin: 15px;">
+    Copyright © Evangel Technologies LLP 2014-2015. All rights reserved.
+</p>
+</div>
+</div>
+</footer>
+
+
+
+
+{% include "includes/footer_scripts.html" %}
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+
+</body>
+</html>

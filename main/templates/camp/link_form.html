@@ -1,0 +1,16 @@
+{% extends "base_camp.html" %}
+
+{% block meta_title %}New campaign{% endblock %}
+{% block title %}New campaign{% endblock %}
+
+{% load mezzanine_tags %}
+
+{% block main %}
+<form method="post">{% csrf_token %}
+<fieldset>{% fields_for form %}</fieldset>
+<div class="actions">
+    <input class="btn btn-default btn-large" type="submit" value="Submit">
+</div>
+
+</form>
+{% endblock %}

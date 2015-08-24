@@ -1,0 +1,6 @@
+Mezzanine==3.1.10
+
+pillow
+
+cartridge
+cartridge_stripe

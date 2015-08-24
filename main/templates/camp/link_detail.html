@@ -1,0 +1,25 @@
+{% extends "base_camp.html" %}
+
+{% load mezzanine_tags rating_tags comment_tags drum_tags future %}
+
+{% block meta_description %}{% metablock %}{{ object.description }}{% endmetablock %}{% endblock %}
+{% block meta_title %}{{ object.title }}{% endblock %}
+{% block title %}
+<a href="#">{{ object.title }}</a>
+{% endblock %}
+
+{% block main %}
+<div class="link-view">
+    <p class="description">{{ object.description|urlize }}</p>
+	{% if object.link %}
+	<p class="link">Link: <a href="{{ object.link }}" target="_blank">{{ object.link }}</a></p>
+	{% endif %}
+    <div class="link-meta">
+        {% rating_for object %}
+        by <a href="{% url "profile" object.user.username %}">{{ object.user.profile }}</a>
+        {{ object.publish_date|short_timesince }} ago
+    </div>
+    {% order_comments_by_score_for object %}
+    {% comments_for object %}
+</div>
+{% endblock %}
